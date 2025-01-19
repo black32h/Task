@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-// Аннотация @RestController для обработки HTTP-запросов
+// Аннотація @RestController використовується для обробки HTTP-запитів
 @RestController
 public class StringListController {
 
-    // Автоматическая привязка компонента
+    // Автоматичне зв'язування компонента через @Autowired
     @Autowired
     private StringListComponent stringListComponent;
 
-    // Обработка GET-запроса по маршруту "/stringList"
+    // Обробка GET-запиту за маршрутом "/stringList"
     @GetMapping("/stringList")
     public List<String> getStringList() {
-        return stringListComponent.getList(); // Возвращаем список в HTTP-ответе
+        return stringListComponent.getList(); // Повертаємо список у HTTP-відповіді
     }
 }
