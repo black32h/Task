@@ -5,31 +5,32 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-// Аннотация @Component делает этот класс бином Spring
-// Аннотация @ConfigurationProperties связывает свойства с префиксом "string" с этим классом
+// Аннотація @Component робить цей клас біном Spring
+// Аннотація @ConfigurationProperties зв'язує властивості з префіксом "string" із цим класом
 @Component
 @ConfigurationProperties(prefix = "string")
 public class StringListComponent {
 
-    // Переменная должна соответствовать имени свойства в application.properties
+    // Змінна повинна відповідати імені властивості в application.properties
     private List<String> list;
 
-    // Геттер для доступа к списку
+    // Гетер для доступу до списку
     public List<String> getList() {
         return list;
     }
 
-    // Сеттер для связывания значений из .properties
+    // Сетер для зв'язування значень із .properties
     public void setList(List<String> list) {
         this.list = list;
     }
 
-    // Метод для вывода списка в консоль
+    // Метод для виведення списку в консоль
     public void printStringList() {
         if (list != null) {
             list.forEach(System.out::println);
         } else {
-            System.out.println("Список пуст!");
+            System.out.println("Список порожній!");
         }
     }
 }
+
