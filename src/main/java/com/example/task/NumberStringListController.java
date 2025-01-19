@@ -11,12 +11,12 @@ import java.util.List;
 public class NumberStringListController {
 
     // Автоматична прив'язка компонента
-    @Autowired
-    private NumberStringListComponent numberStringListComponent;
+    @Autowired // Використання анотації @Autowired для автоматичного впровадження біну NumberStringListComponent
+    private NumberStringListComponent numberStringListComponent; // Поле для компонента, який забезпечує доступ до списку
 
     // Обробка GET-запиту за маршрутом "/numberStringList"
-    @GetMapping("/numberStringList")
+    @GetMapping("/numberStringList") // Маршрут для отримання списку рядків
     public List<String> getNumberStringList() {
-        return numberStringListComponent.getNumberStringList(); // Повертаємо список у HTTP-відповіді
+        return numberStringListComponent.getNumberStringList(); // Повертаємо список як відповідь на HTTP-запит
     }
 }
