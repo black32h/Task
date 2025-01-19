@@ -11,23 +11,23 @@ import java.util.Map;
 @RestController
 public class CategoryController {
 
-    // Получаем строку с данными из application.properties
+    // Отримуємо строку з даними з application.properties
     @Value("${test.map}")
     private String testMapString;
 
-    // Метод для получения карты
+    // Метод для отримання карти (Map)
     @GetMapping("/map")
     public Map<String, String> getMap() throws IOException {
-        // Заменяем одинарные кавычки на двойные, чтобы соответствовать синтаксису JSON
+        // Заміняємо одинарні лапки на подвійні, щоб відповідати синтаксису JSON
         String formattedMapString = testMapString.replace("'", "\"");
 
-        // Создаем объект ObjectMapper для преобразования строки в карту
+        // Створюємо об'єкт ObjectMapper для перетворення строки в карту
         ObjectMapper objectMapper = new ObjectMapper();
 
-        // Преобразуем строку в Map
+        // Перетворюємо строку в Map
         Map<String, String> map = objectMapper.readValue(formattedMapString, Map.class);
 
-        // Возвращаем карту
+        // Повертаємо карту
         return map;
     }
 }
