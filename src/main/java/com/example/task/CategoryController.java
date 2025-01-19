@@ -1,56 +1,34 @@
 package com.example.task;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 @RestController
 public class CategoryController {
 
-    // Читаємо значення з application.properties для кожної категорії
-    @Value("${driverDocType2Categories.MOTO}")
-    private String motoCategories;
+    // Отримуємо строку з даними з application.properties
+    @Value("${test.map.list.value}")
+    private String testMapString;
 
-    @Value("${driverDocType2Categories.CAR}")
-    private String carCategories;
+    // Метод для отримання карти з ключами та списками значень
+    @GetMapping("/map")
+    public Map<String, List<String>> getMap() throws IOException {
+        // Заміняємо одинарні лапки на подвійні для коректного JSON формату
+        String formattedMapString = testMapString.replace("'", "\"");
 
-    @Value("${driverDocType2Categories.TRUCK}")
-    private String truckCategories;
+        // Створюємо об'єкт ObjectMapper для перетворення строки в карту
+        ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${driverDocType2Categories.BUS}")
-    private String busCategories;
-
-    // Метод для отримання карти категорій з їх набором значень
-    @GetMapping("/categories")
-    public Map<String, List<String>> getCategories() {
-        // Створюємо карту, де ключ - категорія, а значення - список значень
-        Map<String, List<String>> categoryMap = new HashMap<>();
-
-        // Розділяємо строку на елементи і додаємо їх в карту
-        categoryMap.put("MOTO", convertToList(motoCategories));  // Додаємо категорію "MOTO" та її значення
-        categoryMap.put("CAR", convertToList(carCategories));    // Додаємо категорію "CAR" та її значення
-        categoryMap.put("TRUCK", convertToList(truckCategories)); // Додаємо категорію "TRUCK" та її значення
-        categoryMap.put("BUS", convertToList(busCategories));    // Додаємо категорію "BUS" та її значення
+        // Перетворюємо строку в Map з ключами та списками значень
+        Map<String, List<String>> map = objectMapper.readValue(formattedMapString, Map.class);
 
         // Повертаємо карту
-        return categoryMap;
-    }
-
-    // Метод для перетворення строки в список
-    private List<String> convertToList(String categories) {
-        List<String> categoryList = new ArrayList<>();
-
-        // Розділяємо строку по комі і додаємо кожен елемент в список
-        for (String category : categories.split(",")) {
-            categoryList.add(category.trim()); // Додаємо кожен елемент, усуваючи зайві пробіли
-        }
-
-        // Повертаємо список
-        return categoryList;
+        return map;
     }
 }
